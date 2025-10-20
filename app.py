@@ -4,67 +4,81 @@ import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
 
-st.set_page_config(page_title="QuLab - AI-Readiness Score", layout="wide")
+st.set_page_config(page_title="QuLab - AI Career Navigator", layout="wide")
 st.sidebar.image("https://www.quantuniversity.com/assets/img/logo5.jpg")
 st.sidebar.divider()
 
-st.title("QuLab: AI Career Navigator & Pathway Planner")
+st.title("QuLab - AI Career Navigator & Pathway Planner")
 st.divider()
 
-st.markdown(\"\"\"
-## Introduction
+st.markdown("""
+In this lab, you will explore the **AI-Readiness Score (AI-R)** framework, a parametric model designed to quantify an individual's preparedness for AI-enabled careers. This interactive application enables you to:
 
-This lab implements the **AI-Readiness Score (AI-R)** framework, enabling you to understand, calculate, and simulate your career readiness in AI-driven labor markets. 
-
-The application provides an interactive environment to explore how individual capabilities, market opportunities, and learning pathways impact career prospects in the age of AI.
-
-### Learning Goals
-
-- **Understand** the AI-Readiness Score framework and its key components
-- **Decompose** the AI-R score into systematic opportunity ($H^R$), idiosyncratic readiness ($V^R$), and synergy components
-- **Evaluate** the potential impact of various learning pathways on skill development and career readiness
-- **Analyze** different career paths through "what-if" scenarios based on market demand and personal capabilities
+- **Understand** the decomposition of AI-R into systematic opportunity ($H^R$), idiosyncratic readiness ($V^R$), and synergy components
+- **Calculate** your personalized AI-Readiness Score based on individual capabilities and market opportunities
+- **Simulate** the impact of various learning pathways on your career readiness
+- **Analyze** different career paths through "what-if" scenarios
 
 ### The AI-Readiness Score Formula
 
-The core formula for calculating the AI-Readiness Score for an individual $i$ at time $t$ is:
+The core formula for the AI-Readiness Score for an individual $i$ at time $t$ is:
 
 $$AI-R_{i,t} = \\alpha \\cdot V^R_i(t) + (1-\\alpha) \\cdot H^R_i(t) + \\beta \\cdot \\text{Synergy}\\%(V^R, H^R)$$
 
 **Where:**
-- $V^R(t)$ = **Idiosyncratic Readiness** (individual capability)
-- $H^R(t)$ = **Systematic Opportunity** (market demand)
+- $V^R(t)$ = **Idiosyncratic Readiness** (individual capability) - normalized to [0, 100]
+- $H^R(t)$ = **Systematic Opportunity** (market demand) - normalized to [0, 100]
 - $\\alpha \\in [0,1]$ = weight on individual vs. market factors
 - $\\beta > 0$ = Synergy coefficient
-- Both $V^R$ and $H^R$ are normalized to $[0, 100]$
-- $\\text{Synergy}\\%$ is normalized to $[0, 100]$ percentage units
+- $\\text{Synergy}\\%$ = alignment between individual skills and market needs - normalized to [0, 100]
 
-This framework enables dynamic scenario planning to understand how learning pathways and career transitions impact future prospects.
+### Key Components
 
-### Navigation
+**1. Idiosyncratic Readiness ($V^R$)** comprises:
+- **AI-Fluency**: Technical AI skills, productivity gains, critical judgment, and learning velocity
+- **Domain-Expertise**: Education foundation, practical experience, and specialization depth
+- **Adaptive-Capacity**: Cognitive flexibility, social-emotional intelligence, and strategic career management
 
-Use the sidebar to navigate between different pages:
-- **Page 1: Personal Profile & VR Calculation** - Input your skills and calculate your Idiosyncratic Readiness
-- **Page 2: Market Analysis & HR Calculation** - Explore occupational opportunities and calculate Systematic Opportunity
-- **Page 3: AI-Readiness Score & Pathway Simulation** - Calculate your complete AI-R score and simulate learning pathways
+**2. Systematic Opportunity ($H^R$)** encompasses:
+- **AI-Enhancement Potential**: How much AI augments the occupation
+- **Job Growth Projection**: Market demand trends
+- **Wage Premium**: Economic returns for AI-skilled roles
+- **Entry Accessibility**: Barriers to entry (education/experience requirements)
 
-\"\"\"
-)
+**3. Synergy Component** measures:
+- **Skills Match**: Alignment between your skills and occupation requirements
+- **Timing Factor**: Experience-based advantage
+- **Alignment Factor**: Overall fit between your profile and market needs
 
-st.divider()
+Navigate through the pages using the sidebar to explore each component in detail!
+""")
 
 # Navigation
 page = st.sidebar.selectbox(
-    label="Navigation",
-    options=["Page 1: Personal Profile & VR", "Page 2: Market Analysis & HR", "Page 3: AI-Readiness & Pathways"]
+    label="📊 Navigation",
+    options=["Home", "Individual Readiness (V^R)", "Market Opportunity (H^R)", "Pathway Simulation"]
 )
 
-if page == "Page 1: Personal Profile & VR":
-    from application_pages.page1 import run_page1
-    run_page1()
-elif page == "Page 2: Market Analysis & HR":
-    from application_pages.page2 import run_page2
-    run_page2()
-elif page == "Page 3: AI-Readiness & Pathways":
-    from application_pages.page3 import run_page3
-    run_page3()
+if page == "Home":
+    st.info("👈 Use the sidebar to navigate to different sections of the application")
+    
+    st.subheader("📚 Getting Started")
+    st.markdown("""
+    1. **Individual Readiness (V^R)**: Input your personal capabilities across AI-Fluency, Domain-Expertise, and Adaptive-Capacity
+    2. **Market Opportunity (H^R)**: Select a target occupation and analyze market demand factors
+    3. **Pathway Simulation**: Explore how learning pathways can enhance your AI-Readiness Score
+    
+    Each page provides interactive controls to adjust parameters and visualize their impact on your career readiness.
+    """)
+
+elif page == "Individual Readiness (V^R)":
+    from application_pages.individual_readiness import run_individual_readiness
+    run_individual_readiness()
+
+elif page == "Market Opportunity (H^R)":
+    from application_pages.market_opportunity import run_market_opportunity
+    run_market_opportunity()
+
+elif page == "Pathway Simulation":
+    from application_pages.pathway_simulation import run_pathway_simulation
+    run_pathway_simulation()
